@@ -1,4 +1,3 @@
-// DATA //
 class Todo {
     constructor(task) {
         this.task = task;
@@ -6,6 +5,7 @@ class Todo {
     }
 }
 
+//State//
 let todos;
 let records = [];
 let userClickedUndo = false;
@@ -17,7 +17,7 @@ if (!localStorage.getItem('todos')) {
 }
 
 todos = JSON.parse(localStorage.getItem('todos'));
-records.push(JSON.parse(JSON.stringify(todos)));
+records.push(copyOf(todos));
 log();
 
 //CRUD
@@ -180,6 +180,11 @@ const uncheckAllBtn = document.querySelector('#uncheckAll');
 const undoBtn = document.querySelector('#undo');
 const redoBtn = document.querySelector('#redo');
 
+// SortableJS Lib. //
+new Sortable(list, {
+    animation: 150,
+    ghostClass: 'blue-background-class'
+});
 
 addBtn.addEventListener('click', () => {
     if (!input.value) {

@@ -242,7 +242,11 @@ i {
   color: #f32166;
 }
 
+/* SortableJS class */
 
+.blue-background-class{
+  background: lightblue;
+}
 
 
 
