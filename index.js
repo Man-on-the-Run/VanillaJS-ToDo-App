@@ -1,6 +1,6 @@
 class Todo {
     constructor(task) {
-        this.id = new Date();
+        this.id = new Date().toString();
         this.task = task;
         this.completed = false;
     }
@@ -192,11 +192,10 @@ new Sortable(list, {
 
 list.ondrop = function() {
     const listItems = Array.from(list.querySelectorAll('li'));
-    // console.log(listItems);
+    console.log(listItems);
     const rearrangedTodos = [];
     listItems.forEach(function(item) {
         const foundTodo = todos.find(function(todo) {
-            console.log(todo.id, item.dataset.id);
             return todo.id === item.dataset.id;
         });
         rearrangedTodos.push(foundTodo);
