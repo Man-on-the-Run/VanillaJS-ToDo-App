@@ -1,5 +1,6 @@
 class Todo {
     constructor(task) {
+        this.id = new Date();
         this.task = task;
         this.completed = false;
     }
@@ -12,13 +13,15 @@ let userClickedUndo = false;
 let steps = 0;
 
 // Init //
-if (!localStorage.getItem('todos')) {
-    localStorage.setItem('todos', JSON.stringify([]));
+function init() {
+    if (!localStorage.getItem('todos')) {
+        localStorage.setItem('todos', JSON.stringify([]));
+    }
+    
+    todos = JSON.parse(localStorage.getItem('todos'));
+    records.push(copyOf(todos));
+    log();
 }
-
-todos = JSON.parse(localStorage.getItem('todos'));
-records.push(copyOf(todos));
-log();
 
 //CRUD
 function add({ todo }) {
@@ -121,6 +124,7 @@ function render() {
 
 function display(todo) {
     const li = document.createElement('li');
+    li.dataset.id = todo.id;
 
     const checkbox = document.createElement('input');
     checkbox.setAttribute('type', 'checkbox');
@@ -185,6 +189,24 @@ new Sortable(list, {
     animation: 150,
     ghostClass: 'blue-background-class'
 });
+
+list.ondrop = function() {
+    const listItems = Array.from(list.querySelectorAll('li'));
+    // console.log(listItems);
+    const rearrangedTodos = [];
+    listItems.forEach(function(item) {
+        const foundTodo = todos.find(function(todo) {
+            console.log(todo.id, item.dataset.id);
+            return todo.id === item.dataset.id;
+        });
+        rearrangedTodos.push(foundTodo);
+    });
+    console.log('Rearranged: ', rearrangedTodos);
+
+    todos = rearrangedTodos;
+    console.log('Todos: ', todos);
+    sync();
+}
 
 addBtn.addEventListener('click', () => {
     if (!input.value) {
@@ -270,6 +292,7 @@ function save(obj) {
 
 //Run
 window.onload = () => {
+    init();
     render();
     resetUI();
 }
