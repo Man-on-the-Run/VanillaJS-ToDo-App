@@ -192,7 +192,7 @@ new Sortable(list, {
 
 list.ondrop = function() {
     const listItems = Array.from(list.querySelectorAll('li'));
-    console.log(listItems);
+    // console.log(listItems);
     const rearrangedTodos = [];
     listItems.forEach(function(item) {
         const foundTodo = todos.find(function(todo) {
@@ -200,10 +200,10 @@ list.ondrop = function() {
         });
         rearrangedTodos.push(foundTodo);
     });
-    console.log('Rearranged: ', rearrangedTodos);
+    // console.log('Rearranged: ', rearrangedTodos);
 
     todos = rearrangedTodos;
-    console.log('Todos: ', todos);
+    // console.log('Todos: ', todos);
     sync();
 }
 
